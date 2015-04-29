@@ -45,13 +45,13 @@ class Main {
 
     private function unzip(zip:String, dest:String) {
         var f = File.read(zip);
-        var enries = Reader.readZip(f);
+        var entries = Reader.readZip(f);
 
         f.close();
 
         var cwd = Sys.getCwd();
 
-        for(e in enries){
+        for(e in entries){
             var fileName = e.fileName;
             var dirs = fileName.split("/");
 
@@ -63,13 +63,16 @@ class Main {
             }
 
             for(dir in dirs){
-                var dirPath = '${cwd}${dest}/${dir}';
+                var dirPath = '${dest}/${dir}/';
 
                 trace(dirPath);
+
+                if(!FileSystem.exists(dirPath)) {
+                    FileSystem.createDirectory(dirPath);
+                }
             }
 
-            // create the directories it lives in
-            // write the file 
+            // write the files 
         }
     }
 
