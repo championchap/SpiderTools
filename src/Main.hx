@@ -1,8 +1,9 @@
 package ;
 
 import sys.io.File;
-import haxe.zip.Reader;
 import sys.FileSystem;
+
+import haxe.zip.Reader;
 
 class Main {
 
@@ -14,20 +15,30 @@ class Main {
         var args = Sys.args();
 
         switch(args[0]) {
-        case "-n":
-            // do thing
-            newProject(args[1]);
+            case "-n":
+                // do thing
+                newProject(args[1]);
 
-        case "-h":
-            help();
+            case "-v":
+                newVHost(args[1]);
 
-        default:
-            lost();
+            case "-h":
+                help();
+
+            default:
+                lost();
         }
     }
 
     private function newProject(name:String) {
+        // TODO: Use a relative path once we know how this will be installed 
         unzip("/home/erik/Documents/Code/Apps/SpiderTools/templates/NewProject.zip", '${name}');
+    }
+
+    private function newVHost(name:String) {
+        // TODO: This might not be easy
+        // For now this will work with only xampp, and only on Mac or Linux. 
+        Sys.println('Quickly adds ${name} as a new vhost to your system.');
     }
 
     private function lost() {
@@ -36,6 +47,7 @@ class Main {
 
     private function help() {
         Sys.println("To create a new project, use -n \"My Project Name\" inside the directory that you want to create the project folder in.");
+        Sys.println("To create a new vhost use -v \"example.dev\"");
     }
 
     private function unzip(zip:String, dest:String) {
@@ -72,6 +84,38 @@ class Main {
             }
 
         }
+    }
+
+    private function isWindows() {
+        if(Sys.systemName() == "Windows") {
+            return true;
+        }
+        
+        return false;
+    }
+
+    private function isMac() {
+        if(Sys.systemName() == "Mac") {
+            return true;
+        }
+        
+        return false;
+    }
+
+    private function isLinux() {
+        if(Sys.systemName() == "Linux") {
+            return true;
+        }
+        
+        return false;
+    }
+
+    private function isBSD() {
+        if(Sys.systemName() == "BSD") {
+            return true;
+        }
+        
+        return false;
     }
 
 }
