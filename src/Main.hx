@@ -54,25 +54,30 @@ class Main {
         for(e in entries){
             var fileName = e.fileName;
             var dirs = fileName.split("/");
+            var filename = "";
+            var path = dest;
 
             // no dirs
             if(dirs.length == 1) {
                 dirs = [];
             } else {
-                dirs.pop();
+                filename = dirs.pop();
             }
 
             for(dir in dirs){
                 var dirPath = '${dest}/${dir}/';
-
-                trace(dirPath);
+                path += '/${dir}/';
 
                 if(!FileSystem.exists(dirPath)) {
                     FileSystem.createDirectory(dirPath);
                 }
             }
 
-            // write the files 
+            if(filename != "") {
+                var data = Reader.unzip(e);
+                var output = File.write('${path}${filename}');
+            }
+            
         }
     }
 
