@@ -27,12 +27,7 @@ class Main {
     }
 
     private function newProject(name:String) {
-        // check the name is valid
-        // create the folder if it doesn't already exist
-        // unzip and copy the empty project template files into the new folder
-        // done! :D
-
-        unzip("/home/erik/Documents/Code/Apps/SpiderTools/templates/test.zip", '${name}');
+        unzip("/home/erik/Documents/Code/Apps/SpiderTools/templates/NewProject.zip", '${name}');
     }
 
     private function lost() {
@@ -55,22 +50,18 @@ class Main {
             var fileName = e.fileName;
             var dirs = fileName.split("/");
             var filename = "";
-            var path = dest;
+            var path = '${dest}/';
 
-            // no dirs
-            if(dirs.length == 1) {
-                dirs = [];
-            } else {
-                filename = dirs.pop();
-            }
+            filename = dirs.pop();
 
             for(dir in dirs){
                 var dirPath = '${dest}/${dir}/';
-                path += '/${dir}/';
+                path += '${dir}/';
+            }
 
-                if(!FileSystem.exists(dirPath)) {
-                    FileSystem.createDirectory(dirPath);
-                }
+            if(!FileSystem.exists(path)) {
+                FileSystem.createDirectory(path);
+                Sys.println('Spinning : ${path}');
             }
 
             if(filename != "") {
