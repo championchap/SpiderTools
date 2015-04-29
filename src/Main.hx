@@ -76,8 +76,10 @@ class Main {
             if(filename != "") {
                 var data = Reader.unzip(e);
                 var output = File.write('${path}${filename}');
+
+                output.close();
             }
-            
+
         }
     }
 
