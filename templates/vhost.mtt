@@ -1,0 +1,15 @@
+# ::name::
+<VirtualHost *:80>
+
+    ServerName ::name::
+    DocumentRoot "::path::"
+
+    <Directory "::path::">
+        Options Indexes FollowSymLinks Includes ExecCGI
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog "logs/::name::-error_log"
+
+</VirtualHost>

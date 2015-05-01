@@ -41,36 +41,44 @@ class Main {
 	}
 
 	private function newVHost(name:String, path:String = '') {
+		// setup for Linux by default 
+		// TODO: Use real paths, these are test files on the desktop 
 		var httpd;
-		var httpd_location = '';
+		var httpd_location = '/home/erik/Desktop/httpd.conf';
 
 		var hosts;
-		var hosts_location = '';
+		var hosts_location = '/home/erik/Desktop/hosts';
 
 		var vhosts;
-		var vhosts_location = '';
+		var vhosts_location = '/home/erik/Desktop/httpd-vhosts.conf';
 
-		if(isLinux) {
-			httpd_location = '/opt/lampp/etc/httpd.conf';
-			hosts_location = '/etc/hosts';
-			vhosts_location = '/opt/lampp/etc/extra/httpd-vhosts.conf';
-		}
-
+		// correct later if need be 
 		if(isMac) {  }
 		if(isWindows) {  }
 		if(isBSD) {  }
 
-		// search hosts for the name
+		// search hosts for the name 
+		var searchHosts = new EReg('$name', 'i');
+		hosts = File.append(hosts_location, false);
+
+		if(searchHosts.match(File.getContent(hosts_location))) {
+			Sys.println('$name already exists in the hosts file! Aborting... X_X');
+		} else {
+			// add a host to the hosts file 
+			hosts.writeString('\n127.0.0.1\t${name}');
+		}
+
 		// search the vhosts file for the name 
 
-		// if we don't find it in either of those, move on
+		// if we don't find it in either of those, move on 
 
-		// make a backup copy of these files
+		// make a backup copy of these files 
 
 		// insert the name + ip into the hosts file 
-		// insert the vhost into the vhosts file
+		// insert the vhost into the vhosts file 
 
-		// close the files 
+		// close the files
+		hosts.close();
 	}
 
 	private function lost() {
